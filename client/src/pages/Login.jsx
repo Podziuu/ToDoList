@@ -8,7 +8,7 @@ const Login = () => {
       <h1 className="text-4xl font-bold text-center mb-6">Log in</h1>
       <Input name="E-mail" placeholder="Enter your email"/>
       <Input name="Password" placeholder="Enter your password" />
-      <Button className="w-fit m-auto mt-8 px-9 py-3" text="Login"/>
+      <Button className="w-fit m-auto mt-8" big text="Login"/>
     </div>
   </div>;
 };
