@@ -8,6 +8,9 @@ module.exports = {
         "dark-blue": "#368CB0",
         "primary": "#7D53DE",
       },
+      boxShadow: {
+        'inline': "inset 0 0 0 2px white"
+      }
     },
   },
   plugins: [],
