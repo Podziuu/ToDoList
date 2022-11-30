@@ -1,16 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { login } from "../store/auth-slice";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../components/Button";
 import Input from "../components/Input";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+    dispatch(login());
+    navigate('/tasks');
+  };
 
   return (
     <div className="h-screen flex justify-center items-center bg-light-blue">
