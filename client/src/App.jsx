@@ -12,8 +12,6 @@ import PrivateRoutes from "./util/PrivateRoutes";
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  console.log(isLoggedIn);
-
   return (
     <div className="App">
       <NavBar />

@@ -2,8 +2,8 @@ import React from "react";
 
 const Wave = () => {
   return (
-    <footer className="fixed bottom-0 w-full">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+    <footer className="fixed bottom-0 w-full max-h-[210px]">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="h-fit -z-10">
         <path
           fill="#7D53DE"
           fillOpacity="1"

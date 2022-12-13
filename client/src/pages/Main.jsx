@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 import Task from "../components/Task";
 import Button from "../components/Button";
@@ -24,6 +25,7 @@ const Main = () => {
       taskName: "",
     });
   };
+  const day = useSelector(state => state.ui.day);
 
   const clickHandler = (e) => {
     const clickedTask = tasks.find((task) => task.id === e.target.id);
@@ -43,8 +45,8 @@ const Main = () => {
 
   return (
     <div className="h-screen flex flex-col items-center pt-24 bg-light-blue">
-      <h1 className="text-4xl text-white font-bold">Monday</h1>
-      <div className="bg-white h-3/5 rounded-3xl w-4/5 max-w-[350px] mt-14 flex flex-col">
+      <h1 className="text-4xl text-white font-bold">{day}</h1>
+      <div className="bg-white h-3/5 rounded-3xl w-4/5 max-w-[400px] mt-14 flex flex-col">
         <div className="bg-dark-blue text-white text-xl text-center rounded-t-3xl py-3">
           <h2>X tasks remaining</h2>
         </div>
@@ -81,11 +83,12 @@ const Main = () => {
         </form>
       </div>
       <div className="flex items-center mt-4 justify-between w-4/5 max-w-[350px]">
-        <Button onClick={clearList} text="Clear List" primary small />
+        <Button onClick={clearList} text="Clear List" primary small className="z-30" />
         <Button
           onClick={deleteCompletedTasks}
           text="Delete Completed Tasks"
           small
+          className="z-30"
         />
       </div>
     </div>

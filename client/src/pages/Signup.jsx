@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "../store/auth-slice";
 
 import Button from "../components/Button";
@@ -23,7 +23,7 @@ const Signup = () => {
 
   return (
     <div className="h-screen flex justify-center items-center bg-light-blue">
-      <div className="bg-white p-6 rounded-[50px] w-4/5 flex flex-col">
+      <div className="bg-white p-6 rounded-[50px] w-4/5 flex flex-col max-w-[500px]">
         <h1 className="text-4xl font-bold text-center mb-6">Sign Up</h1>
         <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
           <Input
@@ -58,6 +58,12 @@ const Signup = () => {
           /> */}
           <Button className="w-fit m-auto mt-8" big text="Sign Up" submit />
         </form>
+        <p className="text-center mt-4">
+          Have an account ? Log in{" "}
+          <Link className="text-blue-600 z-50" to="/login">
+            here!
+          </Link>
+        </p>
       </div>
     </div>
   );
