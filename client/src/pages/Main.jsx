@@ -16,6 +16,30 @@ const DUMMY_TASKS = [
   { name: "task 8", id: "8", checked: false },
 ];
 
+// const DUMMY_TASKS2 = [
+//   {
+//     day: "Monday",
+//     tasks: [
+//       { name: "Homework", id: "1.1", checked: false },
+//       { name: "Clean dishes", id: "2.1", checked: false },
+//     ],
+//   },
+//   {
+//     day: "Tuesday",
+//     tasks: [
+//       { name: "Algebra", id: "1.2", checked: false },
+//       { name: "Clean room", id: "2.2", checked: false },
+//     ],
+//   },
+//   {
+//     day: "Wednesday",
+//     tasks: [
+//       { name: "Algebra", id: "1.2", checked: false },
+//       { name: "Clean room", id: "2.2", checked: false },
+//     ],
+//   }
+// ];
+
 const Main = () => {
   const [tasks, setTasks] = useState(DUMMY_TASKS);
   const { register, handleSubmit, reset } = useForm();
@@ -25,7 +49,7 @@ const Main = () => {
       taskName: "",
     });
   };
-  const day = useSelector(state => state.ui.day);
+  const day = useSelector((state) => state.ui.day);
 
   const clickHandler = (e) => {
     const clickedTask = tasks.find((task) => task.id === e.target.id);
@@ -83,7 +107,13 @@ const Main = () => {
         </form>
       </div>
       <div className="flex items-center mt-4 justify-between w-4/5 max-w-[350px]">
-        <Button onClick={clearList} text="Clear List" primary small className="z-30" />
+        <Button
+          onClick={clearList}
+          text="Clear List"
+          primary
+          small
+          className="z-30"
+        />
         <Button
           onClick={deleteCompletedTasks}
           text="Delete Completed Tasks"

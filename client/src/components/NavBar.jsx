@@ -52,7 +52,6 @@ const NavBar = () => {
           ReactDOM.createPortal(
             <div
               className="absolute left-0 top-0 h-screen w-screen z-100 bg-dark-blue z-50"
-          //    onClick={clickHandler}
             >
               <FiX
                 className="absolute right-3 top-3 cursor-pointer"
@@ -72,15 +71,8 @@ const NavBar = () => {
           {WEEKDAYS.map(day => {
                   return <li onClick={clickDay} key={day} className={`cursor-pointer ${currentDay == day ? 'underline underline-offset-8 decoration-primary' : ''}`}>{day}</li>
           })}
-          {/* <li onClick={clickDay}>Monday</li>
-          <li onClick={clickDay}>Tuesday</li>
-          <li onClick={clickDay}>Wednesday</li>
-          <li onClick={clickDay}>Thursday</li>
-          <li onClick={clickDay}>Friday</li>
-          <li onClick={clickDay}>Saturday</li>
-          <li onClick={clickDay}>Sunday</li> */}
         </ul>}
-        {isLoggedIn && <Button className="hidden lg:block" text="Log out" onClick={logoutUser} />}
+        {isLoggedIn && <Button className="hidden lg:block font-normal" text="Log out" onClick={logoutUser} />}
       </div>
     </nav>
   );
