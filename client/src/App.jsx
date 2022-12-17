@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Main from "./pages/Main";
 import PrivateRoutes from "./util/PrivateRoutes";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -23,6 +24,9 @@ function App() {
         </Route>
         <Route element={<PrivateRoutes />}>
           <Route path="/tasks" element={<Main />} />
+        </Route>
+        <Route>
+          <Route path="*" element={<NotFound/>} />
         </Route>
       </Routes>
       <Wave />

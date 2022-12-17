@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import express from "express";
-import cors from 'cors';
+import cors from "cors";
 
-import {default as taskRouter} from './routes/tasks-routes.js';
+import { default as taskRouter } from "./routes/tasks-routes.js";
+import { default as usersRouter } from "./routes/users-routes.js";
 
 const app = express();
 
@@ -10,7 +11,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/api/tasks", taskRouter)
+app.use("/api/tasks", taskRouter);
+app.use("/api/users", usersRouter);
 
 mongoose
   .connect(
