@@ -5,7 +5,7 @@ import { User } from "../models/user.js";
 import taskSchema from "../schemas/taskSchema.js";
 
 export const getTasks = async (req, res, next) => {
-  const { day, userId } = req.body;
+  const { userId } = req.body;
 
   let tasks;
   try {
