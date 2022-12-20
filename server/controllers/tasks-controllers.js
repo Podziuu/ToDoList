@@ -5,11 +5,11 @@ import { User } from "../models/user.js";
 import taskSchema from "../schemas/taskSchema.js";
 
 export const getTasks = async (req, res, next) => {
-  const { day } = req.body;
+  const { day, userId } = req.body;
 
   let tasks;
   try {
-    tasks = await Task.find({ day });
+    tasks = await Task.find({ user: userId });
   } catch (err) {
     return next(
       new HttpError("Something went wrong, could not find a place.", 500)
