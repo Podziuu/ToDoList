@@ -12,7 +12,16 @@ export const getTasks = async (req, res, next) => {
     tasks = await Task.find({ user: userId });
   } catch (err) {
     return next(
-      new HttpError("Something went wrong, could not find a place.", 500)
+      new HttpError("Something went wrong, please try again later.", 500)
+    );
+  }
+
+  if (!tasks) {
+    return next(
+      new HttpError(
+        "Could not find tasks for provided user, please try again later.",
+        500
+      )
     );
   }
 
