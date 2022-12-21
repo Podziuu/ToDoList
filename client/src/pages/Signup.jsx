@@ -25,13 +25,19 @@ const Signup = () => {
     <div className="h-screen flex justify-center items-center bg-light-blue">
       <div className="bg-white p-6 rounded-[50px] w-4/5 flex flex-col max-w-[500px]">
         <h1 className="text-4xl font-bold text-center mb-6">Sign Up</h1>
-        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form
+          className="flex flex-col"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
           <Input
             name="Name"
             placeholder="Enter your name"
             type="text"
             errors={errors}
-            {...register("Name", { required: "Name is required!" })}
+            {...register("Name", {
+              required: "Name is required!",
+            })}
           />
           <Input
             name="E-mail"
@@ -52,7 +58,13 @@ const Signup = () => {
             placeholder="Enter your password"
             type="password"
             errors={errors}
-            {...register("Password", { required: "Password is required!" })}
+            {...register("Password", {
+              required: "Password is required!",
+              minLength: {
+                value: 8,
+                message: "Password should be at least 8 characters long!",
+              },
+            })}
           />
           {/* <Input
             name="Confirm Password"

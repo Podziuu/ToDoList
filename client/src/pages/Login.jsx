@@ -47,7 +47,13 @@ const Login = () => {
             name="Password"
             placeholder="Enter your password"
             type="password"
-            {...register("Password", { required: "Password is required!" })}
+            {...register("Password", {
+              required: "Password is required!",
+              minLength: {
+                value: 8,
+                message: "Password should be at least 8 characters long!",
+              },
+            })}
             errors={errors}
           />
           <Button className="w-fit m-auto mt-8" big text="Login" submit />

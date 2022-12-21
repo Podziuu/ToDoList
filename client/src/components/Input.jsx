@@ -17,13 +17,11 @@ const Input = React.forwardRef(
           {...rest}
           ref={ref}
         />
-        {errors &&
-          (errors[name]?.type === "required" ||
-            errors[name]?.type === "pattern") && (
-            <span className="ml-4 pt-1 text-red-500">
-              {errors[name]?.message}
-            </span>
-          )}
+        {errors && (
+          <span className="ml-4 pt-1 text-red-500">
+            {errors[name]?.message}
+          </span>
+        )}
       </div>
     );
   }
