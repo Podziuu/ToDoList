@@ -29,7 +29,7 @@ export const getTasks = async (req, res, next) => {
 };
 
 export const createTask = async (req, res, next) => {
-  const { name, day, user } = req.body;
+  const { name, day } = req.body;
   const { error } = taskSchema.validate(req.body);
 
   if (error) {
@@ -40,7 +40,7 @@ export const createTask = async (req, res, next) => {
   const createdTask = new Task({
     name,
     day,
-    user,
+    user: userData.userId,
   });
 
   let existingUser;

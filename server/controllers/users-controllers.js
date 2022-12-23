@@ -1,13 +1,12 @@
 import HttpError from "../models/HttpError.js";
 import { User } from "../models/user.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import userSchema from "../schemas/userSchema.js";
 
 export const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
   const { error } = userSchema.validate(req.body);
-
-  console.log(error);
 
   if (error) {
     return next(
@@ -55,7 +54,23 @@ export const signup = async (req, res, next) => {
     );
   }
 
-  res.status(200).json({ user: createdUser });
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: createdUser._id, email: createdUser.email },
+      process.env.JWT_KEY,
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    console.log("from token");
+    return next(
+      new HttpError("Signing up failed, please try again later.", 500)
+    );
+  }
+
+  res
+    .status(201)
+    .json({ userId: createdUser._id, email: createdUser.email, token });
 };
 
 export const login = async (req, res, next) => {
@@ -94,9 +109,24 @@ export const login = async (req, res, next) => {
     );
   }
 
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: existingUser._id, email: existingUser.email },
+      process.env.JWT_KEY,
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    console.log(err);
+    return next(
+      new HttpError("Loggin in failed, please try again later.", 500)
+    );
+  }
+
   res.status(200).json({
     name: existingUser.name,
     email: existingUser.email,
     userId: existingUser._id,
+    token,
   });
 };
