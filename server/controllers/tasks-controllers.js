@@ -5,11 +5,9 @@ import { User } from "../models/user.js";
 import taskSchema from "../schemas/taskSchema.js";
 
 export const getTasks = async (req, res, next) => {
-  const { userId } = req.body;
-
   let tasks;
   try {
-    tasks = await Task.find({ user: userId });
+    tasks = await Task.find({ user: req.userData.userId });
   } catch (err) {
     return next(
       new HttpError("Something went wrong, please try again later.", 500)
@@ -40,12 +38,12 @@ export const createTask = async (req, res, next) => {
   const createdTask = new Task({
     name,
     day,
-    user: userData.userId,
+    user: req.userData.userId,
   });
 
   let existingUser;
   try {
-    existingUser = await User.findById(user);
+    existingUser = await User.findById(req.userData.userId);
   } catch (err) {
     return next(
       new HttpError("Creating task failed, please try again later.", 500)

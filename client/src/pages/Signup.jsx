@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../store/auth-slice";
+import axios from "axios";
 
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -15,10 +16,25 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    dispatch(login());
-    navigate("/tasks");
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signup",
+        {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        }
+      );
+      console.log(response);
+      console.log(data);
+      dispatch(
+        login({ userId: response.data.userId, token: response.data.token })
+      );
+      navigate("/tasks");
+    } catch (err) {
+      console.log(err.response.data.message);
+    }
   };
 
   return (
@@ -35,7 +51,7 @@ const Signup = () => {
             placeholder="Enter your name"
             type="text"
             errors={errors}
-            {...register("Name", {
+            {...register("name", {
               required: "Name is required!",
             })}
           />
@@ -44,7 +60,7 @@ const Signup = () => {
             placeholder="Enter your email"
             type="email"
             errors={errors}
-            {...register("Email", {
+            {...register("email", {
               required: "Email is required!",
               pattern: {
                 value:
@@ -58,11 +74,11 @@ const Signup = () => {
             placeholder="Enter your password"
             type="password"
             errors={errors}
-            {...register("Password", {
+            {...register("password", {
               required: "Password is required!",
               minLength: {
-                value: 8,
-                message: "Password should be at least 8 characters long!",
+                value: 6,
+                message: "Password should be at least 6 characters long!",
               },
             })}
           />

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
 import Task from "../components/Task";
 import Button from "../components/Button";
+import axios from "axios";
 
 const DUMMY_TASKS = [
   { name: "task 1", id: "1", checked: false },
@@ -50,6 +51,30 @@ const Main = () => {
     });
   };
   const day = useSelector((state) => state.ui.day);
+  const token = useSelector((state) => state.auth.token);
+  const userId = useSelector((state) => state.auth.userId);
+
+  console.log(userId);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/tasks",
+          {
+            userId,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchTasks();
+  }, []);
 
   const clickHandler = (e) => {
     const clickedTask = tasks.find((task) => task.id === e.target.id);

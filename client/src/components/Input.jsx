@@ -6,9 +6,11 @@ const Input = React.forwardRef(
       ? "border-red-500 focus:border-red-500"
       : "border-primary focus:border-primary";
 
+    const labelName = name.charAt(0).toUpperCase() + name.slice(1);
+
     return (
       <div className="py-2 flex flex-col">
-        <label className="text-lg font-semibold ml-4 mb-1">{name}</label>
+        <label className="text-lg font-semibold ml-4 mb-1">{labelName}</label>
         <input
           className={`border ${classes} rounded-full py-2 px-4 w-full focus:border-2 outline-none`}
           placeholder={placeholder}
