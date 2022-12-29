@@ -9,12 +9,20 @@ import { FiMenu, FiX } from "react-icons/fi";
 import logo from "../assets/logo.png";
 import Button from "./Button";
 
-const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const WEEKDAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const currentDay = useSelector(state => state.ui.day);
+  const currentDay = useSelector((state) => state.ui.day);
   const [showNav, setShowNav] = useState(false);
 
   const classes = isLoggedIn ? "justify-between w-full" : "";
@@ -30,11 +38,11 @@ const NavBar = () => {
   const combined = (e) => {
     clickDay(e);
     clickHandler();
-  }
+  };
 
   const logoutUser = () => {
     dispatch(logout());
-  }
+  };
 
   return (
     <nav className="fixed top-0 bg-dark-blue w-full h-16 flex px-8 justify-center">
@@ -45,14 +53,13 @@ const NavBar = () => {
           <img src={logo} className="w-12 mr-2 rounded-md" />
           ToDoList
         </Link>
-        {(isLoggedIn && !showNav) && (
+        {isLoggedIn && !showNav && (
           <FiMenu size={48} onClick={clickHandler} className="lg:hidden" />
         )}
-        {(isLoggedIn && showNav) &&
+        {isLoggedIn &&
+          showNav &&
           ReactDOM.createPortal(
-            <div
-              className="absolute left-0 top-0 h-screen w-screen z-100 bg-dark-blue z-50"
-            >
+            <div className="absolute left-0 top-0 h-screen w-screen z-100 bg-dark-blue z-50">
               <FiX
                 className="absolute right-3 top-3 cursor-pointer"
                 size={36}
@@ -60,19 +67,43 @@ const NavBar = () => {
                 onClick={clickHandler}
               />
               <ul className="flex justify-center items-center text-white text-4xl font-bold flex-col gap-y-10 h-full">
-                {WEEKDAYS.map(day => {
-                  return <li onClick={combined} key={day} className="cursor-pointer">{day}</li>
+                {WEEKDAYS.map((day) => {
+                  return (
+                    <li onClick={combined} key={day} className="cursor-pointer">
+                      {day}
+                    </li>
+                  );
                 })}
               </ul>
             </div>,
             document.getElementById("navbar")
           )}
-        {isLoggedIn && <ul className="hidden lg:flex justify-between w-3/5 items-center text-white font-normal text-xl h-full">
-          {WEEKDAYS.map(day => {
-                  return <li onClick={clickDay} key={day} className={`cursor-pointer ${currentDay == day ? 'underline underline-offset-8 decoration-primary' : ''}`}>{day}</li>
-          })}
-        </ul>}
-        {isLoggedIn && <Button className="hidden lg:block font-normal" text="Log out" onClick={logoutUser} />}
+        {isLoggedIn && (
+          <ul className="hidden lg:flex justify-between w-3/5 items-center text-white font-normal text-xl h-full">
+            {WEEKDAYS.map((day) => {
+              return (
+                <li
+                  onClick={clickDay}
+                  key={day}
+                  className={`cursor-pointer ${
+                    currentDay == day
+                      ? "underline underline-offset-8 decoration-primary"
+                      : ""
+                  }`}
+                >
+                  {day}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+        {isLoggedIn && (
+          <Button
+            className="hidden lg:block font-normal"
+            text="Log out"
+            onClick={logoutUser}
+          />
+        )}
       </div>
     </nav>
   );

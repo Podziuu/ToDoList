@@ -7,6 +7,7 @@ const Task = (props) => {
         <input
           onClick={props.click}
           id={props.id}
+          defaultChecked={props.checked}
           type="checkbox"
           className="peer relative h-5 w-5 shrink-0 appearance-none rounded-xl border-2 border-primary after:absolute after:left-0 after:top-0 after:h-full after:content-[''] checked:bg-primary hover:ring hover:ring-violet-400 focus:outline-none shadow-inline"
         />
