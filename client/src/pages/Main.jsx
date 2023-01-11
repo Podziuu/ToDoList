@@ -77,10 +77,19 @@ const Main = () => {
   };
 
   const deleteCompletedTasks = () => {
-    const restTasks = tasks2.filter((task) => {
+    const restTasks = tasks.filter((task) => {
       return task.checked === false;
     });
     setTasks(restTasks);
+    console.log("witam")
+    axios.delete(
+      `${import.meta.env.VITE_BACKEND_URL}/tasks/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   };
 
   return (

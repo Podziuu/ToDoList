@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { isObjectIdOrHexString } from "mongoose";
 import HttpError from "../models/HttpError.js";
 import { Task } from "../models/task.js";
 import { User } from "../models/user.js";
@@ -105,4 +105,46 @@ export const checkTask = async (req, res, next) => {
   task.save();
 
   res.status(200).json({ task });
+};
+
+export const deleteCompleted = async (req, res, next) => {
+  const completedTask = await Task.find({
+    user: req.userData.userId,
+    checked: true,
+  });
+
+  const Ids = completedTask.map((t) => t._id);
+
+  console.log(Ids);
+
+  const sess = await mongoose.startSession();
+  sess.startTransaction();
+  try {
+    const deletedCount = await Task.deleteMany(
+      {
+        user: req.userData.userId,
+        checked: true,
+        _id: { $in: Ids },
+      },
+      { sess }
+    );
+    const deletedUsersTasks = await User.updateMany(
+      { _id: req.userData.userId },
+      {
+        $pull: {
+          tasks: {
+            $in: Ids,
+          },
+        },
+      }
+    );
+    console.log(deletedUsersTasks, "USERS TASKS");
+    await sess.commitTransaction();
+    sess.endSession();
+    console.log(deletedCount);
+  } catch (err) {
+    console.log(err);
+    await sess.abortTransaction();
+    sess.endSession();
+  }
 };
