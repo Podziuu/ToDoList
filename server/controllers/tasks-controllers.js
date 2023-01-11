@@ -108,14 +108,28 @@ export const checkTask = async (req, res, next) => {
 };
 
 export const deleteCompleted = async (req, res, next) => {
-  const completedTask = await Task.find({
-    user: req.userData.userId,
-    checked: true,
-  });
+  let completedTasks;
+  try {
+    completedTasks = await Task.find({
+      user: req.userData.userId,
+      checked: true,
+    });
+  } catch (err) {
+    return next(
+      new HttpError("Something went wrong, please try again later.", 500)
+    );
+  }
 
-  const Ids = completedTask.map((t) => t._id);
+  if (!completedTasks) {
+    return next(
+      new HttpError(
+        "Could not find any completed tasks, please try again later.",
+        404
+      )
+    );
+  }
 
-  console.log(Ids);
+  const Ids = completedTasks.map((t) => t._id);
 
   const sess = await mongoose.startSession();
   sess.startTransaction();
@@ -138,13 +152,13 @@ export const deleteCompleted = async (req, res, next) => {
         },
       }
     );
-    console.log(deletedUsersTasks, "USERS TASKS");
     await sess.commitTransaction();
     sess.endSession();
-    console.log(deletedCount);
   } catch (err) {
-    console.log(err);
     await sess.abortTransaction();
     sess.endSession();
+    return next(
+      new HttpError("Deleting tasks went wrong, please try again later.", 500)
+    );
   }
 };
